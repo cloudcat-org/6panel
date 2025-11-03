@@ -1,0 +1,27 @@
+{
+    "server": {
+        "ipv4": {
+            "enabled": true,
+            "host": "0.0.0.0",
+            "port": 8080
+        },
+        "ipv6": {
+            "enabled": true,
+            "host": "::",
+            "port": 8080
+        },
+        "tls": {
+            "enabled": false,
+            "cert": "cert.pem",
+            "key": "key.pem"
+        },
+        "entrance": ""
+    },
+    "api": {
+        "enabled": true,
+        "key": "secretkey"
+    },
+    "users": [
+        {"uid": 0, "username": "面板用户名，默认为root", "password": "MD5编码的密码", "language": "zh-CN"}
+    ]
+}
