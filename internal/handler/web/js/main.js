@@ -1,20 +1,60 @@
-// Update the clock every second
-function updateClock() {
-    // Get the currect date and time
-    const now = new Date();
-    
-    // Format date
-    const showDate = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日 ' + ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()];
-    
-    // Format time
-    const showTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+// Get current date and time
+function getCurrentDateTime() {
+    return new Date();
 }
 
-// Call the updateClock function every second
-setInterval(updateClock, 1000);
+// Format date
+function formatDate(date) {
+    const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${weekdays[date.getDay()]}`;
+}
 
-// Get the current date and time
-updateClock();
+// Format time
+function formatTime(date) {
+    return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+}
+
+// Format date and time
+function formatDateTime(date) {
+    return {
+        date: formatDate(date),
+        time: formatTime(date)
+    };
+}
+
+// Update clock
+function updateClockDisplay(date) {
+    const { date: dateString, time: timeString } = formatDateTime(date);
+    
+    const dateElement = document.getElementById('date');
+    const timeElement = document.getElementById('time');
+    const dateTimeElement = document.getElementById('dateTime');
+    
+    if (dateElement) dateElement.textContent = dateString;
+    if (timeElement) timeElement.textContent = timeString;
+    if (dateTimeElement) dateTimeElement.textContent = `${dateString} ${timeString}`;
+}
+
+let clockIntervalId = null;
+
+// Start clock
+function startClock() {
+    if (clockIntervalId) clearInterval(clockIntervalId);
+    
+    updateClockDisplay(getCurrentDateTime());
+    
+    clockIntervalId = setInterval(() => {
+        updateClockDisplay(getCurrentDateTime());
+    }, 1000);
+}
+
+// Stop clock
+function stopClock() {
+    if (clockIntervalId) {
+        clearInterval(clockIntervalId);
+        clockIntervalId = null;
+    }
+}
 
 // Create a loading animation
 function createLoader() {
@@ -39,8 +79,8 @@ function createLoginPage() {
     const loginPage = document.createElement('div');
     loginPage.id = 'login';
     loginPage.innerHTML = `
-        <div class="date">${showDate}</div>
-        <div class="time">${showTime}</div>
+        <div class="date" id="date"></div>
+        <div class="time" id="time"></div>
         <img src="/img/logo.webp" alt="avatar" class="avatar">
         <input type="text" placeholder="请输入用户名" class="username">
         <input type="password" placeholder="请输入密码" class="password">
@@ -59,7 +99,7 @@ function createHomePage() {
         <div class="lovely-header">
             <img src="/img/logo.webp" alt="avatar" class="avatar">
             <div class="menu">LovelyFile</div>
-            <div class="dateTime">${showDate} ${showTime}</div>
+            <div class="dateTime" id="dateTime"></div>
         </div>
         <div class="content"></div>
         <div class="dock">
@@ -126,6 +166,7 @@ window.addEventListener('hashchange', onHashChange);
 
 // Ensure that the page is switched after all resources are loaded
 window.addEventListener('load', () => {
+    startClock();
     showMainPage();
     if (window.location.hash === '') {
         window.location.hash = '#/home'; // 默认路由
