@@ -9,6 +9,7 @@ func Route() {
 	// Static files routes
 	http.HandleFunc("/favicon.ico", StaticFileHandler)
 	http.HandleFunc("/css/", StaticFileHandler)
+	http.HandleFunc("/font-awesome/", StaticFileHandler)
 	http.HandleFunc("/js/", StaticFileHandler)
 	http.HandleFunc("/img/", StaticFileHandler)
 

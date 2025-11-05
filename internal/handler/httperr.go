@@ -33,8 +33,6 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, statusCode int) {
 		message = "An unexpected error occurred."
 	}
 
-	log.Printf("[Web Access] Return %d error: %s", statusCode, message)
-
 	data := module.ErrorPageData{
 		StatusCode: statusCode,
 		Title:      title,
