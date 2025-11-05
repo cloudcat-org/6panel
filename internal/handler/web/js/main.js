@@ -1,11 +1,20 @@
-// Get the currect date and time
-const now = new Date();
+// Update the clock every second
+function updateClock() {
+    // Get the currect date and time
+    const now = new Date();
+    
+    // Format date
+    const showDate = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日 ' + ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()];
+    
+    // Format time
+    const showTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+}
 
-// Format date
-const showDate = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日 ' + ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][now.getDay()];
+// Call the updateClock function every second
+setInterval(updateClock, 1000);
 
-// Format time
-const showTime = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+// Get the current date and time
+updateClock();
 
 // Create a loading animation
 function createLoader() {
@@ -35,7 +44,7 @@ function createLoginPage() {
         <img src="/img/logo.webp" alt="avatar" class="avatar">
         <input type="text" placeholder="请输入用户名" class="username">
         <input type="password" placeholder="请输入密码" class="password">
-        <button class="loginBtn" id="loginBtn"><i class="fa-regular fa-circle-right"></i></button>
+        <a href="#/home"><button class="loginBtn" id="loginBtn"><i class="fa-regular fa-circle-right"></i></button></a>
     `;
     loginPage.style.display = 'none';
     container.appendChild(loginPage);
